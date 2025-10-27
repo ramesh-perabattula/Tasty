@@ -33,36 +33,41 @@ const Body = () => {
     },[]);
     
   return (
-    <div className='bg-gray-50 min-h-screen'>
-        <div className='py-6 flex gap-4 mx-8 justify-center items-center'>
-            <input 
-                className='border-2 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent w-96 shadow-sm hover:border-orange-300 transition-colors' 
-                type='text' 
-                placeholder='Search for restaurants...'
-                value={searchName} 
-                onChange={(e)=>setSearchName(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && searchRestaurants()}
-            />
-            <button 
-                className='bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105'
-                onClick={searchRestaurants}
-            >
-                Search
-            </button>
-            <button 
-                className='bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105'
-                onClick={FilterRestaurants}
-            >
-                ⭐ Top Rated
-            </button>
+    <div className='bg-gray-50 min-h-screen pb-8'>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+            {/* Search Bar Section */}
+            <div className='flex flex-col sm:flex-row gap-4 py-6 items-center justify-center'>
+                <input 
+                    className='border-2 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent w-full sm:w-80 md:w-96 shadow-sm hover:border-orange-300 transition-colors' 
+                    type='text' 
+                    placeholder='Search for restaurants...'
+                    value={searchName} 
+                    onChange={(e)=>setSearchName(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && searchRestaurants()}
+                />
+                <button 
+                    className='bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 w-full sm:w-auto'
+                    onClick={searchRestaurants}
+                >
+                    Search
+                </button>
+                <button 
+                    className='bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 w-full sm:w-auto'
+                    onClick={FilterRestaurants}
+                >
+                    ⭐ Top Rated
+                </button>
+            </div>
+
+            {/* Restaurant Cards Grid */}
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center'>
+                {filterRes.map((restaurant) => (
+                    <Link key={restaurant.info.id} to={"/restaurant-list/"+restaurant.info.id} className='w-full max-w-xs'>
+                        <RestaurantCard resData={restaurant}/>
+                    </Link> 
+                ))}
+            </div>
         </div>
-        <div className='flex flex-wrap justify-center gap-6 px-8 py-4'>
-             {filterRes.map((restaurant) => (
-          <Link  key={restaurant.info.id}  to={"/restaurant-list/"+restaurant.info.id}>
-            <RestaurantCard resData={restaurant}/>
-          </Link> 
-        ))}
-         </div>
     </div>
   )
 }
